@@ -23,3 +23,6 @@ Thumbs.db
 
 # Env files (future Atlas credentials)
 .env
+
+smoke_test*.keras
+smoke_test*.py
