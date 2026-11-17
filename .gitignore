@@ -1,0 +1,25 @@
+# Environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Data (regenerable from Kaggle source; not committed)
+data/
+
+# Model / pipeline artifacts
+artifacts/
+*.joblib
+*.keras
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Env files (future Atlas credentials)
+.env
