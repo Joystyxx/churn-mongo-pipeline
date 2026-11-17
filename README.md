@@ -25,7 +25,14 @@ The goal of this project is not just to train a model, but to prove an understan
 - **Handling the `TotalCharges` Trap:** The raw dataset stores `TotalCharges` as a string, using a blank space (`' '`) for the 11 new customers with `tenure == 0`. We coerce this to numeric at ingest. During Phase 1 aggregations, we drop these nulls to prove Mongo manipulation skills. However, during model training, we *impute* them using the median. Discarding new customers from training just because they haven't been billed yet is a bad production habit.
 - **MongoDB `$facet` Aggregations:** Instead of running multiple round-trip queries to get class averages and overall totals, we use MongoDB's `$facet` stage to compute all statistics in a single server-side pass.
 - **The Imbalance Trade-off:** The dataset is 26.5% churners. XGBoost handles this via tree splits. For the Neural Network, we explicitly applied `class_weight="balanced"`. This is why the NN achieves a higher Recall (catching 80% of churners) but suffers a lower Precision (51%), meaning it generates more false alarms. 
-- **One-Hot Encoding:** We use `sparse_output=False` in the Scikit-Learn encoder. While sparse matrices save memory, Keras requires dense NumPy arrays for training. 
+- **One-Hot Encoding:** We use `sparse_output=False` in the Scikit-Learn encoder. While sparse matrices save memory, Keras requires dense NumPy arrays for training.
+
+## Experiment Tracking in MongoDB
+
+Metrics and hyperparameters for every training run are automatically logged to the `experiments` collection in MongoDB. This allows us to track model drift over time and compare architectures without relying on local notebook outputs.
+
+![MongoDB Experiment Tracking](assets/mongo_experiments.png)
+
 
 ## Results & Model Comparison
 
